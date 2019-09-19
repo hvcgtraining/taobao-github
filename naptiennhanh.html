@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>HVCG Software</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!-- Css -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/font.css" />
+    <link rel="stylesheet" href="./css/chosen.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link href="./css/taikhoan.css" rel="stylesheet" />
+    <link href="./css/sweetalert2.min.css" rel="stylesheet" />
+    <link href="./css/giohang.css" rel="stylesheet" />
+    <link href="./css/custom.css" rel="stylesheet" />
+    <!-- Js -->
+    <script src="./js/jquery-1.11.2.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap-datetimepicker.min.js"></script>
+    <script src="./js/functions.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <script src="./js/ie-emulation-modes-warning.js"></script>
+    <script src="./js/sweetalert2.min.js"></script>
+    <script src='./js/autoNumeric-min.js'></script>
+    <script src="./js/autoNumeric-1.9.18.js"></script>
+    <script src="./js/bootstrap-select.min.js"></script>
+
+</head>
+
+<body>
+
+
+    <head>
+
+        <!-- moment js -->
+        <script src="moment.min.js"></script>
+
+    </head>
+
+    <div class="ht-htop">
+        <div class="container">
+            <div class="ht-htleft">
+                <ul class="ht-htlul">
+                    <li>
+                        <p>Tỷ giá: <span>1¥ = 3,500 đ</span></p>
+                    </li>
+                    <li>
+                        <p>Số dư khả dụng: <span>0 VNĐ</span></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="ht-htright">
+                <ul class="ht-htrul clearfix">
+                    <li>
+                        <p><a href="./ketdon.html"><i class="ht-htic ht-htigh"></i>Giỏ hàng
+                                (<span> 0 </span>)</a></p>
+                    </li>
+
+                    <li>
+                        <div class="ht-droptb" id="ht-pops">
+                            <div class="dropdown">
+                                <button class="dropdown-toggle" type="button" id="ht-drop2" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true">
+                                    <p>Chào mừng: <strong id="sp-user-name">bqhieu</strong>, đã trở lại</p>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <p><a href="{route('getLogoutUser')}" class="ht-htexit">Thoát</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div>
+        <input type="hidden" data-id=39 id="check-id" />
+        <input type="hidden" data-id=39 id="cskh-id" />
+        <input type="hidden" data-id=id="check-order-id" />
+    </div>
+    <script>
+        $("#ht-pops").hover(
+            function () {
+                $(this).children().addClass('open');
+                $("#ht-drop2").attr('aria-expanded', 'true');
+            }, function () {
+                $(this).children().removeClass('open');
+                $("#ht-drop2").attr('aria-expanded', 'false');
+            }
+        );
+    </script>
+
+    <!--END HEADER-->
+    <style>
+        .ck-bkprime {
+            background: #ffffff;
+        }
+
+        .ht-tkbul li.active a {
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        .ht-tkml {
+            width: 260px;
+            float: left;
+            background: #ebebeb;
+            border: 1px dashed #b7b7b7;
+            padding: 15px;
+        }
+
+        .ht-tkml-tit {
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .ht-tkml-iful li {
+            margin-bottom: 10px;
+            display: table;
+            width: 100%;
+        }
+
+        .ht-tkml-iful li p {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .ht-tkml-iful li p:nth-child(2) {
+            text-align: right;
+            padding-left: 5px;
+        }
+
+        .ht-tkml-ifo {
+            padding: 15px 0;
+            border-bottom: 1px dotted #c1c1c1;
+        }
+
+        .ht-tkml-ifo:last-child {
+            border: none;
+            margin: 15px 0 0 0;
+        }
+
+        .ht-tkml-ifname {
+            font-weight: 700;
+        }
+
+        .ht-tkml-ifcall {
+            color: #ff3333;
+            font-weight: 700;
+        }
+
+        .ht-tkml-ifmail {
+            color: #2361ff;
+            font-style: italic;
+        }
+
+        .ht-tkml-ifcty {
+            color: #2361ff;
+            font-weight: 700;
+        }
+
+        .ht-tkmr {
+            margin-left: 275px;
+        }
+
+        .ht-tkmrul>li {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .ht-tkmrul>li a {
+            background: #b7b7b7;
+            display: inline-block;
+            width: 150px;
+            height: 34px;
+            line-height: 34px;
+        }
+
+        .ht-tkmrul>li a:hover,
+        .ht-tkmrul>li a:active,
+        .ht-tkmrul>li a:focus {
+            background: #646464;
+            color: #ffffff;
+        }
+
+        .ht-tkmr .tab-content {
+            border: 1px solid #c5c5c5;
+            padding: 25px 15px;
+        }
+
+        .ht-tkbul {
+            margin: 0 -10px;
+            overflow: hidden;
+        }
+
+        .ht-tkbul>li {
+            float: left;
+            width: 14.28%;
+            text-align: center;
+            padding: 0 12px;
+            margin-bottom: 15px;
+        }
+
+        .ht-tkbul li a {
+            display: block;
+            overflow: hidden;
+        }
+
+        .ht-tkmbor {
+            border: 1px solid #b7b7b7;
+            padding: 30px 20px;
+        }
+
+        .ht-tkmain {
+            padding: 30px 0;
+            /*background:#ffffff;*/
+        }
+
+        .ht-tkmtit {
+            font-size: 18px;
+            color: #246cff;
+            font-weight: 700;
+            text-transform: uppercase;
+            max-width: 300px;
+            background: #ffffff;
+            margin: -40px auto 0;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+
+        .ht-tkmss {
+            max-width: 560px;
+            margin: 20px auto;
+        }
+
+        .ht-tkmss-tit {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            width: 100%;
+            color: #ffffff;
+            background: #30a0ff;
+            padding-left: 15px;
+        }
+
+        .ht-tkms-ifo {
+            border: 1px solid #30a0ff;
+            padding: 15px;
+        }
+
+        .ht-tkms-ifb {
+            color: #ff2929;
+            font-weight: 500;
+        }
+
+        .ht-tkms-ibtn {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .ht-tkms-ibtn a {
+            display: inline-block;
+            width: 333px;
+            text-align: center;
+            height: 32px;
+            line-height: 32px;
+            color: #4d2100;
+            border: 1px solid #e36304;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            background: #ff6c00;
+            font-weight: 500;
+        }
+
+        .ht-tkms-iftxt {
+            color: #000000;
+            margin: 5px 0 15px;
+        }
+
+        .ht-tkms-iful li {
+            display: table;
+            width: 100%;
+            border-bottom: 1px solid #ffffff;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .ht-tkms-iful li:last-child {
+            border: none;
+        }
+
+        .ht-tkms-iful li p {
+            display: table-cell;
+            width: 50%;
+            vertical-align: middle;
+            border-right: 1px solid #ffffff;
+            padding-left: 10px;
+            background: #c5c5c5;
+        }
+
+        .ht-tkms-iful li p:nth-child(2n) {
+            border-right: none;
+            background: #d7d7d7;
+            color: #000000;
+        }
+
+        .ht-tkms-note {
+            margin: 15px 0 0 0;
+        }
+
+        .ht-tkms-note p {
+            color: #ff3636;
+        }
+
+        .ht-main {
+            background: #ffffff;
+        }
+
+        .ht-tkbul li.active a {
+            border-color: #000;
+        }
+
+        .ht-tkbul li a {
+            display: block;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+
+        .ht-tkbul>li {
+            float: left;
+            width: 14%;
+            text-align: center;
+            padding: 0 5px;
+            margin-bottom: 10px;
+        }
+        @media only screen and (max-width:767px){
+            .ht-tkmbor {
+                padding: 10px 20px;
+            }
+            .ht-tkmtit{
+                margin: 15px 0;
+                max-width: 100%;
+                text-align: center;
+                padding: 0;
+            }
+            .ht-tkml{
+                width: 100%;
+                float: initial;
+                margin: 30px 0;
+            }
+            .ht-tkmr{
+                margin: 30px 0 15px 0;
+            }
+            .ht-tkmr .ht-tkbul>li{
+                width: 25% !important;
+            }
+        }
+        @media only screen and (max-width:480px){
+            .ht-tkmrul>li{
+                display: block;
+            }
+            
+            .ht-tkmrul>li a{
+                width: 100%;
+                border: 0.5px solid rgba(216, 216, 216, 0.658);
+                height: 45px;
+                line-height: 45px;
+            }
+            .ht-tkmr .ht-tkbul>li{
+                width: 100% !important;
+            }
+            .ht-nt-btnmn li{
+                display: block;
+                width: 100%;
+                margin: 5px 0;
+                padding: 0 !important;
+            }
+            .cs-span>span{
+                font-size: 15px !important;
+            }
+            .ht-tkml-iful li p{
+                display: block;
+                text-align: left !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+    <div class="ck-main ck-bkprime">
+        <div class="container">
+            <div class="ht-tkmain chargeMoney">
+                <div class="container">
+                    <div class="ht-tkmbor clearfix">
+                        <h2 class="ht-tkmtit">Chọn hình thức thanh toán</h2>
+                        <div class="ht-tkml">
+                            <div class="ht-tkml-ifo">
+                                <h2 class="ht-tkml-tit">Thông tin người nạp</h2>
+                                <ul class="ht-tkml-iful">
+                                    <li>
+                                        <p class="ht-tkml-iftit">Người nạp:</p>
+                                        <p class="ht-tkml-ifname">bqhieu</p>
+                                    </li>
+                                    <li>
+                                        <p class="ht-tkml-iftit">Email:</p>
+                                        <p class="ht-tkml-ifcall">quanghieuit26@gmail.com</p>
+                                    </li>
+                                    <li>
+                                        <p class="ht-tkml-iftit">Số điện thoại:</p>
+                                        <p class="ht-tkml-ifmail">0367448499</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ht-tkml-ifo">
+                                <h2 class="ht-tkml-tit">Thông tin người nhận</h2>
+                                <ul class="ht-tkml-iful">
+                                    <li>
+                                        <p>Người nhận: </p>
+                                        <p class="ht-tkml-ifname">Kiều Hồng Hà</p>
+                                    </li>
+                                    <!-- <li>
+                                    <p>Email:</p>
+                                    <p class="ht-tkml-ifcall">0942.620.374</p>
+                                </li> -->
+                                    <li>
+                                        <p>Công ty</p>
+                                        <p class="ht-tkml-ifcty">Thuận Hòa Logistics</p>
+                                    </li>
+                                    <li>
+                                        <p>Website:</p>
+                                        <p class="ht-tkml-ifcty">https://1688taobao.com.vn</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ht-tkmr">
+                            <ul class="ht-tkmrul" role="tablist">
+                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                        data-toggle="tab">Internet Banking</a></li>
+                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
+                                        data-toggle="tab">Tại văn phòng</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="ht-tkbank">
+                                        <ul class="ht-tkbul">
+                                            <li class="active" data-name="Ngân hàng Vietcombank"
+                                                data-cn="Chi Nhánh Hoàn Kiếm" data-tk="0301000330009"
+                                                data-link="https://www.vietcombank.com.vn/IBanking/">
+                                                <a href="javascript:;"><img src="./images/1.png" alt=""></a>
+                                            </li>
+                                            <li data-name="Ngân hàng Agribank" data-cn="AgriBank CN Hà Nội"
+                                                data-tk="1500205699632"
+                                                data-link="https://ibank.agribank.com.vn/ibank/index.jsp">
+                                                <a href="javascript:;"><img src="./images/7.png" alt=""></a>
+                                            </li>
+                                            <li data-name="Ngân hàng BIDV" data-cn="Chi Nhánh Lạc Trung"
+                                                data-tk="12110000346088"
+                                                data-link="https://www.bidv.vn:81/EntlWeb/IbsJsps/orbilogin.jsp">
+                                                <a href="javascript:;"><img src="./images/8.png" alt=""></a>
+                                            </li>
+                                            <!-- 
+                                        <li data-name="Ngân hàng ACB" data-cn="ACB CN Thanh Nhàn" data-tk="19005888888"
+                                            data-link="https://online.acb.com.vn">
+                                            <a href="javascript:;"><img src="/Content/images/nh/2.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng Đông Á Bank" data-cn="Đông Á Bank CN Lạc Long Quân"
+                                            data-tk="0110594276" data-link="https://ebanking.dongabank.com.vn/">
+                                            <a href="javascript:;"><img src="/Content/images/nh/3.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng Tien Phong Bank"
+                                            data-cn="TP Bank CN Hai Bà Trưng - Hà Nội" data-tk="01785156401"
+                                            data-link="https://ebank.tpb.vn/retail/">
+                                            <a href="javascript:;"><img src="/Content/images/nh/17.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng Techcombank"
+                                            data-cn="TechcomBank CN Hai Bà Trưng- Hà Nội" data-tk="19031543566660"
+                                            data-link="https://ib.techcombank.com.vn/servlet/BrowserServlet">
+                                            <a href="javascript:;"><img src="/Content/images/nh/16.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng Vietinbank" data-cn="VietinBank CN Hai Bà Trưng"
+                                            data-tk="101867244304"
+                                            data-link="https://ebanking.vietinbank.vn/ipay/login.do">
+                                            <a href="javascript:;"><img src="/Content/images/nh/6.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng MBBank" data-cn="MB CN Minh Khai"
+                                            data-tk="0550109888222" data-link="https://ebanking.mbbank.com.vn/">
+                                            <a href="javascript:;"><img src="/Content/images/nh/10.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng Sacombank" data-cn="Sacombank CN Hà Nội"
+                                            data-tk="020052951322" data-link="https://www.isacombank.com.vn/">
+                                            <a href="javascript:;"><img src="/Content/images/nh/4.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng VP Bank" data-cn="VP Bank CN Lạc Trung - Hà Nội"
+                                            data-tk="127653364"
+                                            data-link="https://online.vpbank.com.vn/ebank/login.vpb">
+                                            <a href="javascript:;"><img src="/Content/images/nh/20.png" alt=""></a>
+                                        </li>
+                                        <li data-name="Ngân hàng SHB Bank"
+                                            data-cn="Ngân Hàng TMCP Sài Gòn CN Lạc Trung - Hà Nội" data-tk="1010039714"
+                                            data-link="https://ibanking.shb.com.vn/">
+                                            <a href="javascript:;"><img src="/Content/images/nh/18.png" alt=""></a>
+                                        </li>
+                                         -->
+                                        </ul>
+                                        <style>
+                                            .ht-nt-btnmn {
+                                                margin: 0 -5px;
+                                            }
+
+                                            .ht-nt-btnmn li {
+                                                display: inline-block;
+                                                padding: 0 5px;
+                                            }
+
+                                            .ht-nt-btnmn li button {
+                                                padding: 0;
+                                                height: 34px;
+                                                line-height: 34px;
+                                                width: 100px;
+                                                text-align: center;
+                                            }
+                                        </style>
+                                        <ul class="ht-nt-btnmn">
+                                            <li><a href="javascript:;"><input name="money" class="form-control"
+                                                        id="money"></a>
+                                            </li>
+                                            <li>
+                                                <button type="button" class="btn" id="tt-pu">Nạp tiền</button>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li class="erorrs"></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="profile">
+                                    <div class="bank_transactions" style="line-height:30px;font-size:16px">
+                                        <p style="font-weight: bold;margin-bottom:10px;font-style: italic;
+    color: red;">Khi đã xác nhận đơn hàng, Quý khách đến văn phòng Thuận Hòa&nbsp;đặt tiền đơn hàng từ 90- 100% tiền
+                                            hàng.</p>
+
+                                        <p><strong>C&#244;ng ty TNHH Thương Mại Đầu Tư v&#224; XNK Thuận Hòa</strong>
+                                        </p>
+
+                                        <p><strong>Trụ sở:&nbsp;</strong>số 22 khu liền kề TT6 khu đô thị Văn Phú
+                                            Phường Phú La quận Hà Đông</p>
+
+                                        <!-- <p><strong>VP&nbsp;Cầu Giấy:&nbsp;</strong>P.612, T&#242;a Nh&#224; N6E, Trung H&#242;a
+                                        Nh&#226;n Ch&#237;nh, Cầu Giấy, H&#224; Nội (Sau t&#242;a Handico 6)</p> -->
+
+                                        <!-- <p><strong>Tel</strong>&nbsp;:&nbsp;(024)3.9911.666 – (024)3.9959.666</p> -->
+
+                                        <p><strong>Hotline</strong>: &nbsp;0985.713.394</p>
+                                        <p><strong>Hotline</strong>: &nbsp;0399.632.785</p>
+
+                                        <p><strong>Website</strong>:&nbsp;<a
+                                                href="https://1688taobao.com.vn">https://1688taobao.com.vn</a>
+                                        </p>
+
+                                        <p><strong>Email</strong>&nbsp;: &nbsp;<span style="color:#0000FF">&nbsp;</span>
+                                            vanchuyenthuanhoa@gmail.com</p>
+
+                                        <p>Skype: </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-content cs-span" style="color:red">
+                                Sau khi quy khách chuyển tiền vui lòng nhắn tin tới số <span
+                                    style="font-weight: 700;font-size: 20px;">0985.713.394 / 0399.632.785 </span>theo cú
+                                pháp:<br />
+
+                                <span style="font-weight: 700;font-size: 20px;">{(Số tiền chuyển khoản) - (Email đặt
+                                    hàng) - (Mã đơn) - (Ngân hàng)}</span>
+                                <br />
+
+                                Chúng tôi sẽ gửi tin nhắn phản hồi cho Quý khách <br />
+                                Thắc mắc quý khách liên hệ số hotline: <span
+                                    style="font-weight: 700;font-size: 14px;">0985.713.394</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="poptk" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog ht-pop-dhdia" role="document">
+                            <div class="modal-content ht-pop-content" id="main">
+                                <div class="ht-pop-header">
+                                    <span style="float: right;margin-right: 18px;" data-dismiss="modal"
+                                        aria-label="Close" class="fa fa-times ht-pop-dhclose" aria-hidden="true"></span>
+                                </div>
+                                <div class="ht-tkmss">
+                                    <h2 class="ht-tkmss-tit">Hướng dẫn thực hiện giao dịch Internet Banking của <span
+                                            class="name-nn"></span></h2>
+                                    <div class="ht-tkms-ifo">
+                                        <p class="ht-tkms-ifb">Bước 1: Quý khách đăng nhập tài khoản <span
+                                                class="name-nn"></span></p>
+                                        <div class="ht-tkms-ibtn">
+                                            <a target="_blank" class="link" href="">Đăng nhập tài khoản Internet Banking
+                                                ngân hàng</a>
+                                        </div>
+                                        <p class="ht-tkms-ifb">Bước 2: Quý khách đăng nhập tài khoản <span
+                                                class="name-nn"></span></p>
+                                        <p class="ht-tkms-iftxt">Tại mục chuyển khoản/thanh toán, Quý khách nhập chính
+                                            xác
+                                            thông tin sau:</p>
+                                        <ul class="ht-tkms-iful">
+                                            <li>
+                                                <p>Tên người thụ hưởng</p>
+                                                <p>Kiều Hồng Hà</p>
+                                            </li>
+                                            <li>
+                                                <p>Số tài khoản</p>
+                                                <p class="stk-ht"></p>
+                                            </li>
+                                            <li>
+                                                <p>Chi nhánh</p>
+                                                <p class="name-cn"></p>
+                                            </li>
+                                            <li>
+                                                <p>Số tiền</p>
+                                                <p class="monneys"> VNĐ</p>
+                                            </li>
+                                            <li>
+                                                <p>Nội dung</p>
+                                                <p>Nạp tiền tài khoản : trieunghiemtnus@gmail.com</p>
+                                            </li>
+                                        </ul>
+                                        <div class="ht-tkms-note">
+                                            <p><strong>Lưu ý:</strong></p>
+                                            <p>
+                                                <i>
+                                                    Quý khách vui lòng nhập đúng thông tin mà chúng tôi cung cấp. Nếu
+                                                    quý
+                                                    khách nạp quá
+                                                    số tiền đơn hàng, số dư sẽ được bảo lưu trên hệ thống của Thuận Hòa
+                                                    Logistics.
+                                                    Mọi thắc mắc vui lòng liên hệ hotline: 0985.713.394
+                                                </i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                $(window).load(function () {
+                    var name = "Ngân hàng Vietcombank";
+                    var tk = "0021000409487";
+                    var chi_nhanh = "VietcomBank CN Hà Nội";
+                    var link = "https://www.vietcombank.com.vn/IBanking/";
+                    $(".name-nn").text(name);
+                    $(".stk-ht").text(tk);
+                    $(".name-cn").text(chi_nhanh);
+                    $(".link").attr("href", link);
+                });
+                $(document).on('keyup', '#money', function () {
+                    var price = $(this).val();
+                    if (price.indexOf(',') == -1) {
+                        price = $('#money').val().toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        $(this).val(price);
+                    } else {
+                        price = $('#money').val().replace(/\,/g, '');
+                        $(this).val('');
+                        $(this).val(price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                    }
+                });
+                $(document).on("click", ".ht-tkbul li", function () {
+                    debugger;
+                    $(".ht-tkbul li").removeClass("active");
+                    $(this).addClass("active");
+                    var name_nn = $(this).attr("data-name");
+                    var chi_nhanh = $(this).attr("data-cn");
+                    var tai_khoan = $(this).attr("data-tk");
+                    var link = $(this).attr("data-link");
+                    $(".name-nn").text(name_nn);
+                    $(".stk-ht").text(tai_khoan);
+                    $(".name-cn").text(chi_nhanh);
+                    $(".link").attr("href", link);
+                });
+
+                $(document).on("click", "#tt-pu", function () {
+                    var monney = $("#money").val();
+                    if (monney != "") {
+                        $(".monneys").text(monney + " VNĐ");
+                        $("#poptk").modal("show")
+                    } else {
+                        $(".erorrs").text("ban chua nhap so tien !");
+                    }
+
+                })
+            </script>
+        </div>
+    </div>
+    <!--END MAIN-->
+    <style>
+        .ck-footer {
+            position: fixed;
+            background-color: rgba(0, 0, 0, .8);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 60px;
+        }
+
+        .ck-ftb {
+            display: table;
+            width: 100%;
+            height: 60px;
+        }
+
+        .ck-fttxt {
+            display: table-cell;
+            width: 25%;
+            vertical-align: middle;
+        }
+
+        .ck-fttxt p {
+            color: #ffffff;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .ck-fttxt p span {
+            color: #f74848;
+            font-weight: 700;
+        }
+
+        .ck-foot-ul {
+            margin: 0 -7px;
+            text-align: right;
+        }
+
+        .ck-foot-ul li {
+            padding: 0 7px;
+            display: inline-block;
+        }
+
+        .ck-foot-ul li a {
+            display: inline-block;
+            width: 124px;
+            height: 38px;
+            text-align: center;
+            line-height: 38px;
+            border-radius: 6px;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .ck-foot-ul li a span {
+            display: inline-block;
+            margin-right: 4px;
+            font-size: 16px;
+            position: relative;
+            top: 2px;
+        }
+
+        .ck-fbtn-kd {
+            background: #f74848;
+            -webkit-box-shadow: 0 4px 0 0 rgba(247, 72, 72, 0.71);
+            -moz-box-shadow: 0 4px 0 0 rgba(247, 72, 72, 0.71);
+            box-shadow: 0 4px 0 0 rgba(247, 72, 72, 0.71);
+        }
+
+        .ck-fbtn-ex {
+            background: #009900;
+            -webkit-box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
+            -moz-box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
+            box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
+        }
+    </style>
+    <!-- Modal -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+    </script>
+    <script>
+        $(document).on('hidden.bs.modal', '.modal', function () {
+            $('.modal:visible').length && $(document.body).addClass('modal-open');
+        });
+    </script>
+
+
+</body>
+
+</html>

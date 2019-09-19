@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HVCG Software</title>
+    <meta name="csrf-token" content="D5TNFsWDAdD3CKQFEuTIj9jrEpIlcKtgEHacjgVD" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    
+    <!-- Css -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/font.css" />
+    <link rel="stylesheet" href="./css/chosen.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link href="./css/taikhoan.css" rel="stylesheet" />
+    <link href="./css/sweetalert2.min.css" rel="stylesheet" />
+    <link href="./css/giohang.css" rel="stylesheet" />
+    <link href="./css/custom.css" rel="stylesheet" />
+    <link href="./css/donhang.css" rel="stylesheet" />
+    <!-- Js -->
+    <script src="./js/jquery-1.11.2.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/Content/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="./js/Content/js/functions.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <script src="./js/ie-emulation-modes-warning.js"></script>
+    <script src="./js/sweetalert2.min.js"></script>
+    <script src='./js/autoNumeric-min.js'></script>
+    <script src="./js/autoNumeric-1.9.18.js"></script>
+    <script src="./js/bootstrap-select.min.js"></script>
+    <script src="./js/jquery.form.js"></script>
+    <!--[if lt IE 9]>
+    <script src="~html5shiv.min.js"></script>
+    <script src="~respond.min.js"></script>
+    <![endif]-->
+    <style>
+        @media only screen and (max-width: 690px){
+            .status ul li.item{
+                display: flex;
+                flex-wrap: wrap;
+                height: 170px;
+            }
+            .status ul li .step{
+                display: block !important;
+                width: 100%;
+            }
+            .status ul li .info{
+                display: block !important;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ht-htop">
+    <div class="container">
+        <div class="ht-htleft">
+            <ul class="ht-htlul">
+                <li><p>Tỷ giá: <span>1¥ = 3,500 đ</span></p></li>
+                    <li><p>Số dư khả dụng: <span>0 VNĐ</span></p></li>
+            </ul>
+        </div>
+        <div class="ht-htright">
+            <ul class="ht-htrul clearfix">
+                <li><p><a href="#"><i class="ht-htic ht-htigh"></i>Giỏ hàng</a></p></li>
+
+                    <li>
+                        <div class="ht-droptb" id="ht-pops">
+                            <div class="dropdown">
+                                <a href="https://1688taobao.com.vn/users/don-hang">
+                                    <p>Chào mừng: <strong id="sp-user-name">bqhieu</strong>, đã trở lại</p>
+                                </a>
+
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <p><a href="https://1688taobao.com.vn/dang-xuat" class="ht-htexit">Thoát</a></p>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+<div>
+    <input type="hidden" data-id=39 id="check-id" />
+    <input type="hidden" data-id=39 id="cskh-id" />
+    <input type="hidden" data-id= id="check-order-id" />
+</div>
+<script>
+      $("#ht-pops").hover(
+    function () {
+        $(this).children().addClass('open');
+        $("#ht-drop2").attr('aria-expanded', 'true');
+    }, function () {
+        $(this).children().removeClass('open');
+        $("#ht-drop2").attr('aria-expanded', 'false');
+    }
+  );
+</script>
+
+    <!--END HEADER-->
+    <style>
+        .ck-bkprime{
+            background: #ffffff;
+        }
+    </style>
+    <div class="ck-main ck-bkprime">
+        <div class="container">
+            
+
+<h2 class="ck-mtit">Chi Tiết đơn hàng</h2>
+<div class="status">
+    <ul class="ck-mstep clearfix">
+        <li class="item">
+            <div class="step uk-float-left">
+                <span>1</span>
+            </div>
+            <div class="info">
+                <span class="name">Giỏ hàng</span>
+                <span class="des">Kiểm tra thông tin giỏ hàng</span>
+            </div>
+        </li>
+        <li class="item active">
+            <div class="step uk-float-left">
+                <span>2</span>
+            </div>
+            <div class="info">
+                <span class="name">Kết đơn</span>
+                <span class="des">Khách hàng kết đơn</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="step uk-float-left">
+                <span>3</span>
+            </div>
+            <div class="info">
+                <span class="name">Đặt cọc</span>
+                <span class="des">Khách hàng đặt cọc</span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+
+
+
+<div class="ht-morihgt" style="margin-left:0px;">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+        });
+
+    </script>
+    <h2 class="ht-mor-tit">Thông Tin Đơn Hàng</h2>
+    <div class="ht-accnote">
+        <h3 class="ck-ntit"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Chú ý</h3>
+        <p>Bạn cần nhập chính xác thông tin của bạn để thuận tiện cho quá trình mua hàng và giao dịch.</p>
+    </div>
+    <form action="https://1688taobao.com.vn/users/submitKetDon" class="uk-form uk-form-horizontal" enctype="multipart/form-data" method="post" role="form">
+        <input type="hidden" name="_token" value="D5TNFsWDAdD3CKQFEuTIj9jrEpIlcKtgEHacjgVD">
+        <div class="ht-acmain">
+            <ul class="ht-acmul">
+
+                <li>
+                    <p class="ht-acm-name">Họ tên người nhận:</p>
+                    <div class="ht-acm-right">
+                        <input class="form-control" data-val="true" data-val-required="Không được để trống"
+                               id="UserName" name="name" type="text" value="bqhieu"/>
+                    </div>
+                </li>
+
+                <li>
+                    <p class="ht-acm-name">Email người nhận:</p>
+                    <div class="ht-acm-right">
+                        <input class="form-control" data-val="true" data-val-required="Không được để trống"
+                               id="UserName" name="email" type="text" value="quanghieuit26@gmail.com"/>
+                    </div>
+                </li>
+
+                <li>
+                    <p class="ht-acm-name">Số điện thoại người nhận:</p>
+                    <div class="ht-acm-right">
+                        <input class="form-control" data-val="true" data-val-required="Không được để trống"
+                               id="Phone" name="phone" type="text" value="0367448499"/>
+                        <span class="field-validation-valid text-error" data-valmsg-for="Phone"
+                              data-valmsg-replace="true"></span>
+                    </div>
+                </li>
+
+                <li>
+                    <p class="ht-acm-name">Địa chỉ nhận hàng:</p>
+                    <div class="ht-acm-right">
+                        <textarea class="form-control" cols="20" data-val-required="Không được để trống" id="Address" name="shipping_address" rows="2">ha noi</textarea>
+                        <span class="field-validation-valid text-error" data-valmsg-for="Address"
+                              data-valmsg-replace="true"></span>
+                    </div>
+                </li>
+
+                <li>
+                    <p class="ht-acm-name">Ghi chú đơn hàng:</p>
+                    <div class="ht-acm-right">
+                        <textarea class="form-control" cols="20" data-val-required="Không được để trống" id="Address" name="note" rows="2"></textarea>
+                        <span class="field-validation-valid text-error" data-valmsg-for="Address"
+                              data-valmsg-replace="true"></span>
+                    </div>
+                </li>
+                
+            </ul>
+            <div class="ht-acbtn">
+                <button type="submit" class="btn ht-acbtn-upd">
+                    <i class="fa fa-check-square-o" aria-hidden="true"></i>CHỐT ĐƠN
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+<style>
+    .ht-knha {
+        margin: 30px 0 0 0;
+        padding: 15px;
+        background: #ebebeb;
+        border: 1px solid #707070;
+    }
+
+    .ht-knha-left {
+        float: left;
+        width: 31.33%;
+    }
+
+    .ht-knha-right {
+        margin-left: 31.33%;
+    }
+
+    .ht-knha-tit {
+        margin-bottom: 10px;
+    }
+
+    .ht-knha-lul {
+        margin: 0 -8px;
+    }
+
+        .ht-knha-lul li {
+            float: left;
+            width: 25%;
+            padding: 0 8px;
+            margin-bottom: 15px;
+        }
+
+            .ht-knha-lul li img {
+                width: 85px;
+                height: 85px;
+            }
+
+    .ht-knha-btn,
+    .ht-knha-btn:hover,
+    .ht-knha-btn:active,
+    .ht-knha-btn:focus {
+        height: 85px;
+        line-height: 95px;
+        display: block;
+        color: #ffffff;
+        text-align: center;
+        background: #b7b7b7;
+    }
+
+        .ht-knha-btn i {
+            font-size: 26px;
+        }
+
+    .ht-knha-right {
+        padding: 0 0 0 30px;
+    }
+
+    .ht-knha-rul li {
+        margin-bottom: 10px;
+    }
+
+    .ht-knha-rbtn {
+        display: table;
+        width: 100%;
+    }
+
+        .ht-knha-rbtn p {
+            display: table-cell;
+            vertical-align: middle;
+            width: 80%;
+            color: #ff0000;
+        }
+
+    .ht-knha-rbdiv {
+        vertical-align: middle;
+        display: table-cell;
+        text-align: right;
+    }
+
+    .ht-knha-gkn {
+        display: inline-block;
+        width: 141px;
+        height: 38px;
+        text-transform: uppercase;
+        color: #ffffff;
+        text-align: center;
+        line-height: 38px;
+        border-radius: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        background: #009900;
+        -webkit-box-shadow: 0 4px 0 0 rgba(0,153,0,0.5);
+        -moz-box-shadow: 0 4px 0 0 rgba(0,153,0,0.5);
+        box-shadow: 0 4px 0 0 rgba(0,153,0,0.5);
+        padding: 0;
+        outline: none;
+        border: none;
+    }
+
+    .img-p {
+        position: relative;
+    }
+
+    .ht-knha-close {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        color: red;
+        display: none;
+        cursor: pointer;
+        font-size: 14px;
+        z-index: 999;
+        width: 18px;
+        text-align: center;
+        background: #fefefe;
+    }
+
+    .img-p:hover .ht-knha-close {
+        display: block;
+    }
+</style>
+
+
+        </div>
+    </div>
+    <!--END MAIN-->
+    <style>
+        .ck-footer {
+            position: fixed;
+            background-color: rgba(0,0,0,.8);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 60px;
+        }
+
+        .ck-ftb {
+            display: table;
+            width: 100%;
+            height: 60px;
+        }
+
+        .ck-fttxt {
+            display: table-cell;
+            width: 25%;
+            vertical-align: middle;
+        }
+
+            .ck-fttxt p {
+                color: #ffffff;
+                font-size: 16px;
+                text-transform: uppercase;
+            }
+
+                .ck-fttxt p span {
+                    color: #f74848;
+                    font-weight: 700;
+                }
+
+        .ck-foot-ul {
+            margin: 0 -7px;
+            text-align: right;
+        }
+
+            .ck-foot-ul li {
+                padding: 0 7px;
+                display: inline-block;
+            }
+
+                .ck-foot-ul li a {
+                    display: inline-block;
+                    width: 124px;
+                    height: 38px;
+                    text-align: center;
+                    line-height: 38px;
+                    border-radius: 6px;
+                    -moz-border-radius: 6px;
+                    -webkit-border-radius: 6px;
+                    color: #ffffff;
+                    text-transform: uppercase;
+                }
+
+                    .ck-foot-ul li a span {
+                        display: inline-block;
+                        margin-right: 4px;
+                        font-size: 16px;
+                        position: relative;
+                        top: 2px;
+                    }
+
+        .ck-fbtn-kd {
+            background: #f74848;
+            -webkit-box-shadow: 0 4px 0 0 rgba(247,72,72,0.71);
+            -moz-box-shadow: 0 4px 0 0 rgba(247,72,72,0.71);
+            box-shadow: 0 4px 0 0 rgba(247,72,72,0.71);
+        }
+
+        .ck-fbtn-ex {
+            background: #009900;
+            -webkit-box-shadow: 0px 4px 0px 0px rgba(0,153,0,0.5);
+            -moz-box-shadow: 0px 4px 0px 0px rgba(0,153,0,0.5);
+            box-shadow: 0px 4px 0px 0px rgba(0,153,0,0.5);
+        }
+    </style>
+    <!-- Modal -->
+<script type="text/javascript">
+
+
+
+
+
+function submitFormProduct() {
+    $('#modalProduct').modal('hide');
+    var messageForm = $('#formProduct');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    messageForm.ajaxForm({
+        success:function(data){
+            alert('cập nhật thành công!');
+            location.reload();
+        },
+
+        error:function(e){
+            
+        }
+    }).submit();
+}
+
+
+
+
+
+
+
+function editRowid(id) {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url : "https://1688taobao.com.vn" + "/api/infoProduct",
+
+        type : 'post',
+
+        cache : false,
+
+        data : {id: id},
+
+        success : function(data){
+            var d = JSON.parse(data);
+
+            $('#rowIdProcduct').val(d.rowId);
+            $('#nameProduct').val(d.name);
+            $('#qtyProduct').val(d.qty);
+            $('#noteProduct').val(d.note);
+
+
+            $('#modalProduct').modal('show');
+            
+        },
+
+        error: function() {
+            
+            $('#modalProduct').modal('hide');
+        }
+    });
+}
+
+
+
+function deleteRowid(id) {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url : "https://1688taobao.com.vn" + "/api/deleteProduct",
+
+        type : 'post',
+
+        cache : false,
+
+        data : {id: id},
+
+        success : function(data){
+            alert('Xóa Thành Công!');
+            location.reload();
+        },
+
+        error: function() {
+            
+            alert('vui lòng thử lại!');
+            location.reload();
+        }
+    });
+}
+
+
+   
+</script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+        });
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,699 @@
+(function ($) {
+    $(document).ready(function () {
+        fn_xnk_js.xnk_js().activeTab();
+        var totalpage = parseInt($('#datatable').attr("data-total"));
+        var totalrecord = parseInt($('#datatable').attr("data-totalrecord"));
+        var status = parseInt($('#datatable').attr("data-status"));
+        var pagesizedefine = 20;
+        if (totalpage > 1) {
+            var obj = $('#pagination').twbsPagination({
+                totalPages: totalpage,
+                visiblePages: 3,
+                first: 'Trang đầu',
+                prev: 'Trước',
+                next: 'Tiếp',
+                last: 'Trang cuối',
+                onPageClick: function (event, page) {
+                    var curentpage = parseInt($('#datatable').attr("data-page"));
+                    // if (curentpage != page) {
+                    //     fn_xnk_js.xnk_js().loadData("/Order/LoadData", "list_data", status, $("#txtfrom").val(), $("#txtto").val(), page, pagesizedefine, "");
+                    // }
+                }
+            });
+        }
+
+        $(document).on("change", "#txtto, #txtfrom", function () {
+            LoadData(status, pagesizedefine);
+        });
+
+        $(document).on("click", ".totalfilter", function () {
+            $("#txtfrom").val("");
+            $("#txtto").val("");
+            LoadData(status, pagesizedefine);
+        });
+
+        /* Handle control */
+        /* Delete order */
+        $(document).on("click", ".btnDelete", function () {
+            var id = parseInt($(this).attr("data-orderid"));
+            var code = $(this).attr("data-ordercode");
+            swal({
+                title: "",
+                text: "Bạn có chắc muốn xóa đơn hàng này không?",
+                type: "warning",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                confirmButtonColor: "#DD6B55",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true,
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $(".loading").show();
+                    $.post("/order/deleteorder", { orderId: id, orderCode: code }, function (resp) {
+                        $(".loading").hide();
+                        if (resp == 1) {
+                            //send notify to admin
+                            notifyToAdmin(5, $('#check-id').data('id'));
+                            swal("Xóa đơn hàng thành công", "", "success");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500);
+                        } else {
+                            swal("Hệ thống gặp sự cố trong quá trình update dữ liệu!", "", "warning");
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).on("click", ".btnrestore", function () {
+            var id = parseInt($(this).attr("data-orderid"));
+            var code = $(this).attr("data-ordercode");
+            swal({
+                title: "",
+                text: "Bạn có chắc muốn khôi phục đơn hàng này không?",
+                type: "warning",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                confirmButtonColor: "#DD6B55",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true,
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $(".loading").show();
+                    $.post("/order/RestoreOrder", { orderId: id, orderCode: code }, function (resp) {
+                        $(".loading").hide();
+                        if (resp == 1) {
+                            //send notify to admin
+                            notifyToAdmin(5, $('#check-id').data('id'));
+                            swal("Khôi phục đơn hàng thành công", "", "success");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500);
+
+                        } else {
+                            swal("Hệ thống gặp sự cố trong quá trình update dữ liệu!", "", "warning");
+                        }
+                    });
+                }
+            });
+        });
+        /* Export Excel */
+        $(document).on("click", ".btnExport", function () {
+            var id = parseInt($(this).attr("data-orderid"));
+            var code = $(this).attr("data-ordercode");
+            swal({
+                title: "Bạn có chắc?",
+                text: "muốn thực hiện thao tác này không?",
+                type: "warning",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                confirmButtonColor: "#DD6B55",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true,
+            }, function () {
+                $(".loading").show();
+                var url = "/Order/ExportData";
+                location.href = decodeURIComponent(url + "?orderID=" + id + "&ordercode=" + code);
+                $(".loading").hide();
+                //setTimeout(function () {
+                //    swal("Xuất excel thành công", "", "success");
+                //}, 1000);
+            });
+        });
+        /* Thang */
+
+        $(document).on("click", ".btnedituser", function () {
+            $(".loading").show();
+            var orderId = parseInt($(this).attr("data-orderid"));
+            var ordercode = $(this).attr("data-ordercode");
+            var orderShopId = $(this).attr("data-orderShop");
+            var desending = 0;
+            var data = {
+                orderID: orderId
+            }
+            $.get("/OrdersShop/LoadOrderShop", data, function (resp) {
+                $("#main").html(resp.View);
+                $("#popdh").modal("show");
+                $("#IdOrder").text("#" + ordercode);
+                $("#IdOrder").attr("data-orderCode", ordercode);
+                $("#IdOrder").attr("data-orderid", orderId);
+                //if (orderShopId != "") {
+                //    $(".ht-" + orderShopId).addClass("gtshows");
+                //    $(".ht-s").addClass("gtshow");
+                //    $(".ht-s-" + orderShopId).removeClass("gtshow");
+                //    $(".ht-h-" + orderShopId).addClass("gtshows");
+                //} else {
+                //    //setTimeout(function () {
+                //    $(".ht-s").addClass("gtshow");
+                //    $(".ht-show-1").removeClass("gtshow");
+                //    $(".ht-hide-1").addClass("gtshows");
+                //    $("#list-pro-1").addClass("gtshows")
+                //    //}, 1500);
+                //}
+                $(".loading").hide();
+            })
+        });
+
+        $(document).on("click", ".btnmerge", function () {
+            var namecode = $(this).attr("data-ordercode");
+            swal({
+                title: "Gộp đơn hàng (" + namecode + ") với :",
+                text: "",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                inputPlaceholder: "Nhập mã đơn hàng cần gộp",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                confirmButtonColor: "rgb(48, 133, 214)",
+                showLoaderOnConfirm: true,
+            },
+            function (inputValue) {
+                if (inputValue === false) return false;
+
+                if (inputValue === "") {
+                    swal.showInputError("Bạn cần nhập vào mã đơn hàng!");
+                    return false
+                }
+                $.post("/OrdersShop/Mergeorders", { firstOrder: namecode, secondOrder: inputValue }, function (resp) {
+                    if (resp != null) {
+                        if (resp.Success == 1) {
+                            swal({
+                                title: "Gộp đơn hàng thành công!",
+                                text: "",
+                                type: "success",
+                                showCancelButton: false,
+                                confirmButtonText: "Đóng",
+                                closeOnConfirm: true,
+                                timer: 1500
+                            });
+                            //LoadData(status, pagesizedefine);
+                            location.reload();
+                        }
+                        else {
+                            if (resp.Success == 0) {
+                                swal("Mã đơn hàng không tồn tại!", "", "error");
+                            } else {
+                                if (resp.Success == 2) {
+                                    swal("Xin lỗi bạn không gộp được đơn hàng của các khách hàng khác nhau, đơn hàng đã được xử lý hoặc các đơn hàng không tồn tại!", "", "error");
+                                } else {
+                                    swal("Hệ thống gặp sự cố trong quá trình update dữ liệu!", "", "warning");
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+        $(document).on("click", "#OrderFill", function () {
+            $(".loading").show();
+            var orderId = parseInt($(this).attr("data-orderId"));
+            var ordercode = $(this).attr("data-ordercode");
+            var orderShopId = $(this).attr("data-orderShop");
+            var desending = 0;
+            var data = {
+                orderID: orderId,
+                From: "",
+                To: "",
+                nameOrder: "ModifiedUTCDate",
+                desending: desending == 0 ? false : true,
+                pageIndex: 1,
+                pageSize: 1000
+            }
+            $.get("/OrdersShop/DetailOrder", data, function (resp) {
+                $("#main").html(resp.View);
+                $("#popdh").modal("show");
+                $("#IdOrder").text("#" + ordercode);
+                $("#IdOrder").attr("data-orderCode", ordercode);
+                $("#IdOrder").attr("data-orderid", orderId);
+                $("#IdOrder").attr("data-ordershopId", orderShopId);
+                $(".fancybox").fancybox();
+                $(".loading").hide();
+            })
+        });
+
+        //$(document).on('click', '#ht-show', function () {
+        //    var clas = $(this).attr('data-mvd');
+        //    $(".ht-s").addClass("gtshow");
+        //    $(".ht-h").removeClass("gtshows");
+        //    $(".ht-hide-" + clas).addClass("gtshows");
+        //    $(".ht-show-" + clas).removeClass("gtshow");
+        //    $(".ht-pop-it").slideUp();
+        //    $("#list-pro-" + clas).slideDown();
+        //});
+
+        //$(document).on('click', '#ht-hide', function () {
+        //    var clas = $(this).attr('data-mvd');
+        //    $(".ht-show-" + clas).addClass("gtshow");
+        //    $(this).removeClass("gtshows");
+        //    $(".ht-pop-it").slideUp();
+        //});
+
+        $(document).on('click', '#ht-show', function () {
+            var clas = $(this).attr('data-mvd');
+            $(this).removeClass("gtshows")
+            $(".ht-hide-" + clas).addClass("gtshows");
+            $("#list-pro-" + clas).slideDown();
+        });
+
+        $(document).on('click', '#ht-hide', function () {
+            var clas = $(this).attr('data-mvd');
+            $(this).removeClass("gtshows");
+            $(".ht-show-" + clas).addClass("gtshows");
+            $("#list-pro-" + clas).slideUp();
+        });
+
+        /* End Thang */
+
+        /* Order Event*/
+        $(document).on("click", ".btn_delete_product", function (e) {
+            e.preventDefault();
+            $("#popdh").css("z-index", "1");
+            $(".modal-backdrop.in").css("opacity", "0");
+            var id = $(this).attr("data-productId");
+            var orderId = $("#IdOrder").attr("data-orderid");
+            var ordercode = $(this).attr("data-ordercode");
+            var clas = $(this).parents(".ht-pop-dhitem").attr("data-mvd");
+            swal({
+                title: "",
+                text: "Bạn có chắc muốn xóa sản phẩm này không?",
+                type: "warning",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                confirmButtonColor: "#DD6B55",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true,
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $(".loading").show();
+                    $.post("/order/deleteproduct", { productId: id, OrderId: orderId }, function (resp) {
+                        if (resp == 1) {
+                            $("#popdh").css("z-index", "9999");
+                            $(".modal-backdrop.in").css("opacity", "0.2");
+                            $(".loading").hide();
+                            var desending = 0;
+                            var data = {
+                                orderID: orderId,
+                                From: "",
+                                To: "",
+                                nameOrder: "ModifiedUTCDate",
+                                desending: desending == 0 ? false : true,
+                                pageIndex: 1,
+                                pageSize: 1000
+                            }
+                            $.get("/OrdersShop/LoadOrderShop", data, function (respView) {
+                                $(".loading").hide();
+                                if (respView.View.length > 10) {
+                                    setTimeout(function () {
+                                        $("#main").html(respView.View);
+                                        $("#popdh").modal("show");
+                                        $("#IdOrder").text("#" + ordercode);
+                                        $("#IdOrder").attr("data-orderid", orderId);
+
+                                        //$(".ht-s").addClass("gtshow");
+                                        //$(".ht-h").removeClass("gtshows");
+                                        //$(".ht-hide-" + clas).addClass("gtshows");
+                                        //$(".ht-show-" + clas).removeClass("gtshow");
+                                        //$(".ht-pop-it").slideUp();
+                                        //$("#list-pro-1").slideDown();
+
+                                        $(".loading").hide();
+                                        LoadData(status, pagesizedefine);
+                                        //location.reload();
+                                    }, 100);
+                                } else {
+                                    $("#main").html(respView.View);
+                                    $("#popdh").modal("hide");
+                                    $("#IdOrder").text("#" + ordercode);
+                                    $("#IdOrder").attr("data-orderCode", ordercode);
+                                    $("#IdOrder").attr("data-orderid", orderId);
+                                    LoadData(status, pagesizedefine);
+                                    //location.reload();
+                                }
+                            });
+                        }
+                        else {
+                            $("#IdOrder").text("#" + ordercode);
+                            $("#IdOrder").attr("data-orderCode", ordercode);
+                            $("#IdOrder").attr("data-orderid", orderId);
+                            $(".loading").hide();
+                            $("#popdh").css("z-index", "9999");
+                            $(".modal-backdrop.in").css("opacity", "0.2");
+                            swal("Đơn hàng chưa được cập nhật thành công. Bạn vui lòng thử lại", "", "warning");
+                        }
+                    });
+                }
+                else {
+                    $("#popdh").css("z-index", "9999");
+                    $(".modal-backdrop.in").css("opacity", "0.2");
+                }
+            });
+        });
+
+        $(document).on("change", ".txtQuantity", function () {
+            var _this = $(this);
+            var orderId = $("#IdOrder").attr("data-orderid");
+            var ordercode = $("#IdOrder").attr("data-orderCode");
+            var productID = parseInt(_this.attr("data-productId"));
+            var quantity = parseInt(_this.val());
+            var clas = $(this).parents(".ht-pop-dhitem").attr("data-mvd");
+            $(".loading").show();
+            $.post("/order/updatequantity", { productId: productID, quantity: quantity, orderId: orderId }, function (resp) {
+                if (resp != null) {
+                    if (resp == 1) {
+                        $(".loading").hide();
+                        var desending = 0;
+                        var data = {
+                            orderID: orderId,
+                            From: "",
+                            To: "",
+                            nameOrder: "ModifiedUTCDate",
+                            desending: desending == 0 ? false : true,
+                            pageIndex: 1,
+                            pageSize: 1000
+                        }
+                        $.get("/OrdersShop/LoadOrderShop", data, function (respView) {
+                            $(".loading").hide();
+                            if (respView.View.length > 10) {
+                                setTimeout(function () {
+                                    $("#main").html(respView.View);
+                                    $("#popdh").modal("show");
+                                    $("#IdOrder").text("#" + ordercode);
+                                    $("#IdOrder").attr("data-orderCode", ordercode);
+                                    $("#IdOrder").attr("data-orderid", orderId);
+                                    $(".loading").hide();
+
+
+                                    //$(".ht-s").addClass("gtshow");
+                                    //$(".ht-h").removeClass("gtshows");
+                                    //$(".ht-hide-" + clas).addClass("gtshows");
+                                    //$(".ht-show-" + clas).removeClass("gtshow");
+                                    //$(".ht-pop-it").slideUp();
+                                    //$("#list-pro-" + clas).slideDown();
+
+                                    LoadData(status, pagesizedefine);
+                                    //location.reload();
+                                }, 100);
+                            } else {
+                                $("#main").html(respView.View);
+                                $("#popdh").modal("hide");
+                                $("#IdOrder").text("#" + ordercode);
+                                $("#IdOrder").attr("data-orderCode", ordercode);
+                                $("#IdOrder").attr("data-orderid", orderId);
+                                LoadData(status, pagesizedefine);
+                                //location.reload();
+                            }
+                        });
+                    }
+                    else {
+                        $("#IdOrder").text("#" + ordercode);
+                        $("#IdOrder").attr("data-orderCode", ordercode);
+                        $("#IdOrder").attr("data-orderid", orderId);
+                        $(".loading").hide();
+                        swal("Số lượng chưa được cập nhật thành công. Bạn vui lòng thử lại", "", "warning");
+                    }
+                }
+            });
+        });
+
+        $(document).on("change", ".op1, .op2, .op3, .op4, .op5", function () {
+            var selected = "";
+            var orderId = $("#IdOrder").attr("data-orderid");
+            var ordercode = $("#IdOrder").attr("data-orderCode");
+            var shopId = parseInt($(this).parents(".nhnshopId").attr("data-ordershopId"));
+            var clas = $(this).parents(".ht-pop-dhitem").attr("data-mvd");
+
+            if (($(this).hasClass("op3") || $(this).hasClass("op4") || $(this).hasClass("op5")) && $(this).prop("checked")) {
+                $(this).parents('.nhnshopId').find('.op3, .op4, .op5').prop("checked", false);
+                $(this).prop("checked", true);
+            }
+
+            if ($(this).parents('.nhnshopId').find('.op1:checkbox:checked').length > 0) {
+                selected += "1";
+            }
+            if ($(this).parents('.nhnshopId').find('.op2:checkbox:checked').length > 0) {
+                if (selected.length >= 1) {
+                    selected += ",2";
+                } else {
+                    selected += "2";
+                }
+            }
+            if ($(this).parents('.nhnshopId').find('.op3').prop("checked")) {
+                if (selected.length >= 1) {
+                    selected += ",3";
+                } else {
+                    selected += "3";
+                }
+            }
+            if ($(this).parents('.nhnshopId').find('.op4').prop("checked")) {
+                if (selected.length >= 1) {
+                    selected += ",4";
+                } else {
+                    selected += "4";
+                }
+            }
+            if ($(this).parents('.nhnshopId').find('.op5').prop("checked")) {
+                if (selected.length >= 1) {
+                    selected += ",5";
+                } else {
+                    selected += "5";
+                }
+            }
+
+            $.post("/order/UpdateSelectedShopOrder", { orderID: orderId, orderShopID: shopId, value: selected }, function (resp) {
+                if (resp == 1) {
+                    $(".loading").hide();
+                    var desending = 0;
+                    var data = {
+                        orderID: orderId,
+                        From: "",
+                        To: "",
+                        nameOrder: "ModifiedUTCDate",
+                        desending: desending == 0 ? false : true,
+                        pageIndex: 1,
+                        pageSize: 1000
+                    }
+                    $.get("/OrdersShop/LoadOrderShop", data, function (respView) {
+                        $(".loading").hide();
+                        if (respView.View.length > 10) {
+                            setTimeout(function () {
+                                $("#main").html(respView.View);
+                                $("#popdh").modal("show");
+                                $("#IdOrder").text("#" + ordercode);
+                                $("#IdOrder").attr("data-orderCode", ordercode);
+                                $("#IdOrder").attr("data-orderid", orderId);
+                                $(".loading").hide();
+
+                                //$(".ht-s").addClass("gtshow");
+                                //$(".ht-h").removeClass("gtshows");
+                                //$(".ht-hide-" + clas).addClass("gtshows");
+                                //$(".ht-show-" + clas).removeClass("gtshow");
+                                //$(".ht-pop-it").slideUp();
+                                //$("#list-pro-" + clas).slideDown();
+
+                                LoadData(status, pagesizedefine);
+                            }, 100);
+                        } else {
+                            $("#main").html(respView.View);
+                            $("#popdh").modal("hide");
+                            $("#IdOrder").text("#" + ordercode);
+                            $("#IdOrder").attr("data-orderCode", ordercode);
+                            $("#IdOrder").attr("data-orderid", orderId);
+                            LoadData(status, pagesizedefine);
+                        }
+                    });
+                }
+                else {
+                    $("#IdOrder").text("#" + ordercode);
+                    $("#IdOrder").attr("data-orderCode", ordercode);
+                    $("#IdOrder").attr("data-orderid", orderId);
+                    $(".loading").hide();
+                    swal("Cập nhật dữ liệu không thành công. Bạn vui lòng thử lại", "", "warning");
+                }
+            });
+
+        });
+
+        $(document).on("click", ".edit-icon", function () {
+            $(this).hide();
+            $(this).parents("li").find(".ht-ctredit").css("display", "inline-block");
+            $(this).parents("li").find(".tp-edit").css("display", "inline-block");
+        });
+
+        $(document).on("click", ".btnedit", function () {
+            $(this).parents("li").find(".ht-ctredit").hide();
+            $(this).parents("li").find(".tp-edit").hide();
+            $(this).parents(".ht-pop-tbtsul").find(".edit-icon").show();
+        });
+
+        $(document).on("click", ".editnote", function (e) {
+            e.preventDefault();
+            var id = $(this).attr("data-productId");
+            var orderId = $("#IdOrder").attr("data-orderid");
+            var ordercode = $("#IdOrder").attr("data-orderCode");
+            var clas = $(this).parents(".ht-pop-dhitem").attr("data-mvd");
+            if ($(this).parents("li").find("textarea ").val() == "") {
+                $(this).parents("li").find("textarea ").notify("Bạn vui lòng nhập vào ghi chú!", "error", { position: "bottom left" });
+            } else {
+                $(".loading").show();
+                $.post("/order/updatenoteproduct", { orderId: orderId, productId: id, note: $(this).parents("li").find("input").val() }, function (resp) {
+                    if (resp != null) {
+                        if (resp == 1) {
+                            $(".loading").hide();
+                            var desending = 0;
+                            var data = {
+                                orderID: orderId,
+                                From: "",
+                                To: "",
+                                nameOrder: "ModifiedUTCDate",
+                                desending: desending == 0 ? false : true,
+                                pageIndex: 1,
+                                pageSize: 1000
+                            }
+                            $.get("/OrdersShop/LoadOrderShop", data, function (respView) {
+                                $(".loading").hide();
+                                if (respView.View.length > 10) {
+                                    setTimeout(function () {
+                                        $("#main").html(respView.View);
+                                        $("#popdh").modal("show");
+                                        $("#IdOrder").text("#" + ordercode);
+                                        $("#IdOrder").attr("data-orderCode", ordercode);
+                                        $("#IdOrder").attr("data-orderid", orderId);
+                                        $(".loading").hide();
+
+
+                                        //$(".ht-s").addClass("gtshow");
+                                        //$(".ht-h").removeClass("gtshows");
+                                        //$(".ht-hide-" + clas).addClass("gtshows");
+                                        //$(".ht-show-" + clas).removeClass("gtshow");
+                                        //$(".ht-pop-it").slideUp();
+                                        //$("#list-pro-" + clas).slideDown();
+
+                                        LoadData(status, pagesizedefine);
+                                    }, 100);
+                                } else {
+                                    $("#main").html(respView.View);
+                                    $("#popdh").modal("hide");
+                                    $("#IdOrder").text("#" + ordercode);
+                                    $("#IdOrder").attr("data-orderCode", ordercode);
+                                    $("#IdOrder").attr("data-orderid", orderId);
+                                    LoadData(status, pagesizedefine);
+                                }
+                            });
+                        }
+                        else {
+                            $("#IdOrder").text("#" + ordercode);
+                            $("#IdOrder").attr("data-orderCode", ordercode);
+                            $("#IdOrder").attr("data-orderid", orderId);
+                            $(".loading").hide();
+                            swal("Bạn chưa cập nhật được ghi chú đơn hàng", "", "warning");
+                        }
+                    }
+                });
+            }
+        });
+
+        $(document).on("click", ".btndeposit", function (e) {
+            e.preventDefault();
+            var id = parseInt($(this).attr("data-orderid"));
+            var code = $(this).attr("data-ordercode");
+            swal({
+                title: "",
+                text: "Bạn có chắc muốn đặt cọc đơn hàng này không?",
+                type: "warning",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                confirmButtonColor: "#DD6B55",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true,
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $(".loading").show();
+                    $.post("/order/Deponsit", { orderId: id, orderCode: code }, function (resp) {
+                        $(".loading").hide();
+                        if (resp == 1) {
+                            notifyToAdmin(4, $('#check-order-id').data('id'));
+                            notifyToAdmin(4, 99);
+                            notifyToAdmin(4, 48);
+                            swal("Thông báo", "Đặt cọc thành công", "success");
+                            //LoadData(status, pagesizedefine);
+                            location.reload();
+                        } else {
+                            if (resp == 2) {
+                                swal("Thông báo!", "Không tìm thấy đơn hàng đặt cọc", "warning");
+                            } else if (resp == 3) {
+                                swal("Thông báo!", "Đơn hàng đã được đặt cọc. Vui lòng f5 để cập nhật dữ liệu mới nhất", "warning");
+                            } else if (resp == 4) {
+                                setTimeout(function () {
+                                    swal({
+                                        title: "Thông báo!",
+                                        text: "Số dư quý khách không đủ.Vui lòng nạp tiền để đặt cọc đơn hàng",
+                                        type: "warning",
+                                        confirmButtonText: "Đồng ý",
+                                        closeOnConfirm: true
+                                    }, function (_isConfirm) {
+                                        if (_isConfirm) {
+                                            window.open('/hinh-thuc-thanh-toan', '_blank');
+                                        }
+                                    });
+                                }, 50);
+                            } else {
+                                swal("Thông báo!", "Hệ thống gặp sự cố trong quá trình update dữ liệu", "warning");
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).on("click", ".btnchot", function (e) {
+            e.preventDefault();
+            var id = parseInt($(this).attr("data-orderid"));
+            var code = $(this).attr("data-ordercode");
+            swal({
+                title: "",
+                text: "Bạn có chắc muốn chốt đơn hàng này không?",
+                type: "warning",
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                confirmButtonColor: "#DD6B55",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true,
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $(".loading").show();
+                    $.post("/OrdersShop/ChangeStatusOrder", { orderId: id, orderCode: code }, function (resp) {
+                        $(".loading").hide();
+                        if (resp == 1) {
+                            swal("Bạn đã chuyển đơn hàng sang chờ mua thành công", "", "success");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500);
+                            return false;
+                        }
+                        else {
+                            swal("Hệ thống gặp sự cố trong quá trình update dữ liệu!", "", "warning");
+                        }
+                    });
+                }
+            });
+        });
+
+
+    });
+
+    function LoadData(status, pagesizedefine) {
+        fn_xnk_js.xnk_js().loadDataAndPaging("/Order/LoadData", "list_data", status, $("#txtfrom").val(), $("#txtto").val(), 1, pagesizedefine, "");
+    }
+    function ConvertCurrency(str) {
+        return str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    }
+})(window.jQuery);

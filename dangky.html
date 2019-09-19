@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)https://1688taobao.com.vn/dang-ky -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>HVCG Software</title>
+    <meta name="csrf-token" content="D5TNFsWDAdD3CKQFEuTIj9jrEpIlcKtgEHacjgVD">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Css -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link href="./css/taikhoan.css" rel="stylesheet">
+    <link href="./css/sweetalert2.min.css" rel="stylesheet">
+    <link href="./css/giohang.css" rel="stylesheet">
+    <link href="./css/custom.css" rel="stylesheet">
+    <!-- Js -->
+    <script src="./js/jquery-1.11.2.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap-datetimepicker.min.js"></script>
+    <script src="./js/functions.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <script src="./js/ie-emulation-modes-warning.js"></script>
+    <script src="./js/sweetalert2.min.js"></script>
+    <script src="./js/autoNumeric-min.js"></script>
+    <script src="./js/autoNumeric-1.9.18.js"></script>
+    <script src="./js/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ck-popdk").modal({ backdrop: 'static', keyboard: false });
+        });
+    </script>
+</head>
+
+<body class="modal-open">
+    <style>
+        .ck-bkprime {
+            background: #ffffff;
+        }
+        .modal.fade.in{
+            padding: 0 !important;
+        }
+    </style>
+
+    <img style="width:100%; height: 100vh;" src="thuan-hoa.jpg" alt="Thuận Hòa"> /&gt;
+
+    <!--END MAIN-->
+    <style>
+        .ck-footer {
+            position: fixed;
+            background-color: rgba(0, 0, 0, .8);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 60px;
+        }
+
+        .ck-ftb {
+            display: table;
+            width: 100%;
+            height: 60px;
+        }
+
+        .ck-fttxt {
+            display: table-cell;
+            width: 25%;
+            vertical-align: middle;
+        }
+
+        .ck-fttxt p {
+            color: #ffffff;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .ck-fttxt p span {
+            color: #f74848;
+            font-weight: 700;
+        }
+
+        .ck-foot-ul {
+            margin: 0 -7px;
+            text-align: right;
+        }
+
+        .ck-foot-ul li {
+            padding: 0 7px;
+            display: inline-block;
+        }
+
+        .ck-foot-ul li a {
+            display: inline-block;
+            width: 124px;
+            height: 38px;
+            text-align: center;
+            line-height: 38px;
+            border-radius: 6px;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .ck-foot-ul li a span {
+            display: inline-block;
+            margin-right: 4px;
+            font-size: 16px;
+            position: relative;
+            top: 2px;
+        }
+
+        .ck-fbtn-kd {
+            background: #f74848;
+            -webkit-box-shadow: 0 4px 0 0 rgba(247, 72, 72, 0.71);
+            -moz-box-shadow: 0 4px 0 0 rgba(247, 72, 72, 0.71);
+            box-shadow: 0 4px 0 0 rgba(247, 72, 72, 0.71);
+        }
+
+        .ck-fbtn-ex {
+            background: #009900;
+            -webkit-box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
+            -moz-box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
+            box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
+        }
+        .ck-pop-dialog input[type="checkbox"]{
+            margin-bottom: 4px;
+        }
+        .ck-pop-btndk button{
+            border-radius: 4px;
+        }
+    </style>
+    <!-- Modal -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getDistrict(1);
+        });
+
+        function getDistrict(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+
+                url: "https://1688taobao.com.vn" + "/getCountry",
+
+                type: 'post',
+
+                cache: false,
+
+                data: { id: id },
+
+                success: function (data) {
+                    var d = JSON.parse(data);
+
+                    var htm = '';
+
+                    $.each(d, function (index, value) {
+                        htm += '<option value="' + value.id + '">' + value.name + '</option>';
+                    });
+
+                    $('#ddldistrict').html('');
+                    $('#ddldistrict').html(htm);
+                    $('.selectpicker').selectpicker('refresh');
+
+                },
+
+                error: function () {
+                    alert('Xảy ra lỗi, vui lòng load lại trang!', 'Thông báo.');
+                }
+            });
+        }
+
+    </script>
+    <script>
+        // $(document).on('hidden.bs.modal', '.modal', function () {
+        //     $('.modal:visible').length && $(document.body).addClass('modal-open');
+        // });
+    </script>
+    <div class="modal fade in" id="ck-popdk" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        style="display: block;">
+        <div class="modal-dialog ck-pop-dialog" role="document">
+            <div class="modal-content ht-pop-content">
+                <div class="ht-pop-main">
+                    <h2 class="ht-pop-tit">Khách hàng đăng ký</h2>
+                    <form action="https://1688taobao.com.vn/submitFormRegister" class="uk-form uk-form-horizontal"
+                        method="post" role="form">
+                        <input type="hidden" name="_token" value="D5TNFsWDAdD3CKQFEuTIj9jrEpIlcKtgEHacjgVD">
+                        <span class="field-validation-error"></span>
+                        <ul class="ht-pop-lform">
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-required="Họ tên không được để trống" id="FullName" name="name"
+                                    placeholder="Họ và tên" type="text" value="">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="FullName"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-email="The Email field is not a valid e-mail address."
+                                    data-val-required="Email không được để trống" id="Email" name="email"
+                                    placeholder="Email" type="email" value="">
+                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Email"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-length="Mật khẩu phải có độ dài ít nhất 6 ký tự" data-val-length-max="100"
+                                    data-val-length-min="6" data-val-required="Mật khẩu không được để trống"
+                                    id="Password" name="Password" placeholder="Mật khẩu" type="password">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Password"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-equalto="Mật khẩu và mật khẩu xác nhận không trùng khớp."
+                                    data-val-equalto-other="*.Password" id="ConfirmPassword" name="ConfirmPassword"
+                                    placeholder="Nhắc lại mật khẩu" type="password">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="ConfirmPassword"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                            <li>
+                                <div class="btn-group bootstrap-select gh-gc5sl"><button type="button"
+                                        class="btn dropdown-toggle btn-default" data-toggle="dropdown" role="button"
+                                        data-id="ddlprovince" title="Hà Nội"><span class="filter-option pull-left">Hà
+                                            Nội</span>&nbsp;<span class="bs-caret"><span
+                                                class="caret"></span></span></button>
+                                    <div class="dropdown-menu open" role="combobox">
+                                        <div class="bs-searchbox"><input type="text" class="form-control"
+                                                autocomplete="off" role="textbox" aria-label="Search"></div>
+                                        <ul class="dropdown-menu inner" role="listbox" aria-expanded="false">
+                                            <li data-original-index="0" class="selected"><a tabindex="0" class=""
+                                                    data-tokens="null" role="option" aria-disabled="false"
+                                                    aria-selected="true"><span class="text">Hà Nội</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="1"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hồ Chí Minh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="2"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hải Phòng</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="3"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Đà Nẵng</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="4"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hà Giang</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="5"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Cao Bằng</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="6"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Lai Châu</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="7"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Lào Cai</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="8"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Tuyên Quang</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="9"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Lạng Sơn</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="10"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bắc Kạn</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="11"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Thái Nguyên</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="12"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Yên Bái</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="13"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Sơn La</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="14"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Phú Thọ</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="15"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Vĩnh Phúc</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="16"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quảng Ninh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="17"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bắc Giang</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="18"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bắc Ninh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="19"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hải Dương</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="20"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hưng Yên</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="21"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hòa Bình</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="22"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hà Nam</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="23"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Nam Định</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="24"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Thái Bình</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="25"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Ninh Bình</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="26"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Thanh Hóa</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="27"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Nghệ An</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="28"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hà Tĩnh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="29"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quảng Bình</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="30"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quảng Trị</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="31"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Thừa Thiên Huế</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="32"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quảng Nam</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="33"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quảng Ngãi</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="34"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Kontum</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="35"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bình Định</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="36"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Gia Lai</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="37"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Phú Yên</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="38"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Đăk Lăk</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="39"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Khánh Hòa</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="40"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Lâm Đồng</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="41"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bình Phước</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="42"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bình Dương</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="43"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Ninh Thuận</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="44"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Tây Ninh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="45"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bình Thuận</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="46"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Đồng Nai</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="47"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Long An</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="48"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Đồng Tháp</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="49"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">An Giang</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="50"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bà Rịa - Vũng Tàu</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="51"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Tiền Giang</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="52"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Kiên Giang</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="53"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Cần Thơ</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="54"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bến Tre</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="55"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Vĩnh Long</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="56"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Trà Vinh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="57"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Sóc Trăng</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="58"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Bạc Liêu</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="59"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Cà Mau</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="60"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Điện Biên</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="61"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Đăk Nông</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="62"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Hậu Giang</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                        </ul>
+
+                            </li>
+                            <li>
+                                <div class="btn-group bootstrap-select gh-gc5sl"><button type="button"
+                                        class="btn dropdown-toggle btn-default" data-toggle="dropdown" role="button"
+                                        data-id="ddldistrict" title="Quận Ba Đình"><span
+                                            class="filter-option pull-left">Quận Ba Đình</span>&nbsp;<span
+                                            class="bs-caret"><span class="caret"></span></span></button>
+                                    <div class="dropdown-menu open" role="combobox">
+                                        <div class="bs-searchbox"><input type="text" class="form-control"
+                                                autocomplete="off" role="textbox" aria-label="Search"></div>
+                                        <ul class="dropdown-menu inner" role="listbox" aria-expanded="false">
+                                            <li data-original-index="0" class="selected"><a tabindex="0" class=""
+                                                    data-tokens="null" role="option" aria-disabled="false"
+                                                    aria-selected="true"><span class="text">Quận Ba Đình</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="1"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Hoàn Kiếm</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="2"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Hai Bà Trưng</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="3"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Đống Đa</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="4"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Tây Hồ</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="5"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Cầu Giấy</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="6"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Thanh Xuân</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="7"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Hoàng Mai</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="8"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Long Biên</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="9"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Nam Từ Liêm</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="10"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Thanh Trì</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="11"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Gia Lâm</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="12"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Đông Anh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="13"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Sóc Sơn</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="14"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Hà Đông</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="15"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Thành phố Sơn Tây</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="16"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Ba Vì</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="17"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Phúc Thọ</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="18"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Thạch Thất</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="19"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Quốc Oai</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="20"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Chương Mỹ</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="21"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Đan Phượng</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="22"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Hoài Đức</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="23"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Thanh Oai</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="24"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Mỹ Đức</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="25"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Ứng Hòa</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="26"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Thường Tín</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="27"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Phú Xuyên</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="28"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Huyện Mê Linh</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                            <li data-original-index="29"><a tabindex="0" class="" data-tokens="null"
+                                                    role="option" aria-disabled="false" aria-selected="false"><span
+                                                        class="text">Quận Bắc Từ Liêm</span><span
+                                                        class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                        </ul>
+                            </li>
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-required="Địa chỉ không được để trống" id="Address" name="address"
+                                    placeholder="Địa chỉ" type="text" value="">
+
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Address"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-required="Số điện thoại không được để trống" id="PhoneNumber" name="phone"
+                                    placeholder="Số điện thoại" type="text" value="">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="PhoneNumber"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                            <li>
+                                <input name="IsAgree" type="checkbox" value="OK"> Tôi đồng ý với <a
+                                    href="https://1688taobao.com.vn/dang-ky" target="_blank">điều khoản</a> của nhà cung
+                                cấp
+                            </li>
+                        </ul>
+                        <!-- <div class="ck-pop-capcha">
+                        <script src="https://www.google.com/recaptcha/api.js?hl=vi" async defer></script>
+                        <div class="g-recaptcha uk-text-center" data-sitekey="6LdNaCAUAAAAACbP2_FriYRoaQ0OZ7aM0CRvZQQ5"
+                            data-type="none"></div>
+                        <div style="color:red">
+
+                        </div>
+                    </div> -->
+                        <p class="ck-pop-btndk">
+                            <button type="submit" value="login">Đăng ký</button>
+                        </p>
+                    </form>
+                </div>
+                <form action="https://1688taobao.com.vn/Account/ExternalLogin" method="post"><input
+                        name="__RequestVerificationToken" type="hidden"
+                        value="9cV-Olsm9f2pD0eustaiVQ0jekuI5WBietzXL_TrYuCmjVFtNo2yVIfKyQG5EaLJrRXkwciAVFM508molVEx12BSloTZ-PRl2XlU-F0C1HQ1">
+                    <div class="ck-pop-lfb">
+                        <div class="ck-pop-lbifo">
+                            <!-- <h2 class="ck-pop-lftit">Hoặc đăng nhập bằng</h2>
+                        <ul class="ck-pop-lful clearfix">
+                            <li>
+                                <button class="ck-pop-lgfb" id="Facebook" name="provider" type="submit"
+                                        value="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i><a
+                                            onclick="$(this).closest('button').submit()">Facebook</a></button>
+                            </li>
+                            <li>
+                                <button class="ck-pop-lgfb ck-pop-lgg" id="Google" name="provider" type="submit"
+                                        value="Google"><i class="fa fa-google-plus" aria-hidden="true"></i><a
+                                            onclick="$(this).closest('button').submit()">Google+</a></button>
+                            </li>
+                        </ul> -->
+                            <p class="ck-pop-lfnote">Bạn đã có tài khoản? <a href="./dangnhap.html" class="ck-hdn">Đăng
+                                    nhập!</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--END POP DK-->
+    <div class="modal fade" id="ck-popdn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog ck-pop-dialog" role="document">
+            <div class="modal-content ht-pop-content">
+                <div class="ht-pop-main">
+                    <h2 class="ht-pop-tit">Khách hàng đăng nhập</h2>
+                    <form action="https://1688taobao.com.vn/dang-nhap" class="uk-form uk-form-horizontal" method="post"
+                        role="form"><input name="__RequestVerificationToken" type="hidden"
+                            value="lbJy5KcDEdfCtLhDs-R8F_ie5OtZI4q5Ye2Q48bquYP8Td_BpvlJpFC7uAFKbigA1nTieCIKCFmhIzpnJX4aGJcxPOJqHftmrn8QQrst_U81">
+                        <label class="login-error text-error form-group"></label>
+                        <ul class="ht-pop-lform">
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-required="Email không được để trống" id="email" name="Email"
+                                    placeholder="Tên đăng nhập" type="text" value="">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Email"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                            <li>
+                                <input class="form-control" data-val="true"
+                                    data-val-required="Mật khẩu không được để trống" id="password" name="Password"
+                                    placeholder="Mật khẩu" type="password">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Password"
+                                    data-valmsg-replace="true"></span>
+                            </li>
+                        </ul>
+                        <div class="ht-pop-dnote clearfix">
+                            <div class="ht-pop-dcheck">
+                                <label>
+                                    <input type="checkbox"> Ghi nhớ đăng nhập
+                                </label>
+                            </div>
+                            <p class="ht-pop-dmk"><a href="https://1688taobao.com.vn/quen-mat-khau">Quên mật khẩu?</a>
+                            </p>
+                        </div>
+                        <p class="ck-pop-btndk">
+                            <button id="btnLogin" type="submit" name="login" value="login">Đăng nhập</button>
+                        </p>
+                    </form>
+                </div>
+                <form action="https://1688taobao.com.vn/Account/ExternalLogin" method="post"><input
+                        name="__RequestVerificationToken" type="hidden"
+                        value="PhpKysUJZAWopuE8q60V9efv3gyIelgn8F-yKMS3bOn8_SVIEXHMbKNS7dSeg5TkubbX1eqTOeh26cNgPuGm_PSqYGjYQ3qSPzvArhxLo-o1">
+                    <div class="ck-pop-lfb">
+                        <div class="ck-pop-lbifo">
+                            <h2 class="ck-pop-lftit">Hoặc đăng nhập bằng</h2>
+                            <ul class="ck-pop-lful clearfix">
+                                <li>
+                                    <button class="ck-pop-lgfb" id="Facebook" name="provider" type="submit"
+                                        value="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i><a
+                                            onclick="$(this).closest(&#39;button&#39;).submit()">Facebook</a></button>
+                                </li>
+                                <li>
+                                    <button class="ck-pop-lgfb ck-pop-lgg" id="Google" name="provider" type="submit"
+                                        value="Google"><i class="fa fa-google-plus" aria-hidden="true"></i><a
+                                            onclick="$(this).closest(&#39;button&#39;).submit()">Google+</a></button>
+                                </li>
+                            </ul>
+                            <p class="ck-pop-lfnote">Bạn chưa có tài khoản? <a href="https://1688taobao.com.vn/dang-ky"
+                                    class="ck-hdk">Tạo tài khoản
+                                    mới</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal-backdrop fade in"></div>
+    <div class="swal2-container">
+        <div class="swal2-overlay" tabindex="-1"></div>
+        <div class="swal2-modal" style="display: none" tabindex="-1">
+            <div class="swal2-icon swal2-error"><span class="x-mark"><span class="line left"></span><span
+                        class="line right"></span></span></div>
+            <div class="swal2-icon swal2-question">?</div>
+            <div class="swal2-icon swal2-warning">!</div>
+            <div class="swal2-icon swal2-info">i</div>
+            <div class="swal2-icon swal2-success"><span class="line tip"></span> <span class="line long"></span>
+                <div class="placeholder"></div>
+                <div class="fix"></div>
+            </div><img class="swal2-image">
+            <h2></h2>
+            <div class="swal2-content"></div><input class="swal2-input"><select class="swal2-select"></select>
+            <div class="swal2-radio"></div><label for="swal2-checkbox" class="swal2-checkbox"><input type="checkbox"
+                    id="swal2-checkbox"></label><textarea class="swal2-textarea"></textarea>
+            <div class="swal2-validationerror"></div>
+            <hr class="swal2-spacer"><button class="swal2-confirm">OK</button><button
+                class="swal2-cancel">Cancel</button><span class="swal2-close">×</span>
+        </div>
+    </div>
+</body>
+
+</html>
