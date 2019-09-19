@@ -483,19 +483,33 @@
             -moz-box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
             box-shadow: 0px 4px 0px 0px rgba(0, 153, 0, 0.5);
         }
-        @media only screen and (max-width: 690px){
+        @media only screen and (max-width: 767px){
             .status ul li.item{
                 display: flex;
-                flex-wrap: wrap;
-                height: 170px;
+                flex-wrap: nowrap;
+                justify-content: center;
+                height: auto;
+                align-items: center;
             }
             .status ul li .step{
                 display: block !important;
-                width: 100%;
             }
             .status ul li .info{
                 display: block !important;
                 width: 100%;
+                font-size: 12px !important;
+                margin: 0 !important;
+            }
+        }
+        @media only screen and (max-width: 480px){
+            .status ul li:before,.status ul li:after{
+                display: none !important;
+            }
+            .status ul li.item{
+                width: 100% !important;
+            }
+            .status ul li.item{
+                text-align: center;
             }
         }
     </style>
